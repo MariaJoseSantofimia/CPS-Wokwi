@@ -14,8 +14,8 @@ void vTask1(void* pvParam)
   const char *msg = "Task 1 is running\r\n";
   for(;;) {
     printf(msg);
-    vTaskDelay(10/portTICK_PERIOD_MS);
-    vTaskPrioritySet( NULL, 1 );
+    vTaskDelay(10 / portTICK_PERIOD_MS);  // Espera de 10 ms
+    vTaskPrioritySet(NULL, 1);  // Cambia la prioridad de la propia tarea a 1
   }
   vTaskDelete(NULL);
 }
@@ -25,11 +25,11 @@ void vTask2(void* pvParam)
   const char *msg = "Task 2 is running\r\n";
 
   unsigned portBASE_TYPE uxPriority;
-  uxPriority = uxTaskPriorityGet( NULL );
+  uxPriority = uxTaskPriorityGet(NULL);  // Obtiene la prioridad de la propia tarea
 
   for(;;) {
     printf(msg);  
-    vTaskPrioritySet( xTask1Handle, ( uxPriority + 2 ) ); 
+    vTaskPrioritySet(xTask1Handle, (uxPriority + 2));  // Incrementa la prioridad de Task 1
   }
   vTaskDelete(NULL);
 }
