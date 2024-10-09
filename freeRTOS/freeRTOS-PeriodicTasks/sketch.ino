@@ -25,13 +25,16 @@ void vTaskPeriodic(void* pvParam)
 void vTask1(void* pvParam)
 {
   const char *msg = "Continuous Task 1 is running\r\n";
+
+  // Crear la tarea periódica una vez al inicio
+  xTaskCreate(vTaskPeriodic, "Task Periodic", 1500, NULL, 2, NULL);
+
   for(;;) {
     printf(msg);
-    xTaskCreate(vTaskPeriodic, "Task Periodic", 1500, NULL, 10, NULL);
+    vTaskDelay(1000 / portTICK_PERIOD_MS);  // Añadir retardo de 1 segundo
   }
-  vTaskDelete(NULL);
+  vTaskDelete(NULL);  // Eliminar tarea (aunque no se ejecutará)
 }
-
 
 void vTask2(void* pvParam)
 {
@@ -39,9 +42,9 @@ void vTask2(void* pvParam)
  
   for(;;) {
     printf(msg); 
-    //xTaskCreate(vTaskPeriodic, "Task Periodic", 1500, NULL, 10, NULL);
+    vTaskDelay(1000 / portTICK_PERIOD_MS);  // Añadir retardo para liberar CPU
   }
-  vTaskDelete(NULL);
+  vTaskDelete(NULL);  // Eliminar tarea (aunque no se ejecutará)
 }
 
 
