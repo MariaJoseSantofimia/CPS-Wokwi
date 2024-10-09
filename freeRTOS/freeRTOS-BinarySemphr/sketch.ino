@@ -10,7 +10,7 @@
 #include "freertos/queue.h"
 #include "freertos/semphr.h"
 
-#define D2 10 // Define el pin donde está conectado el LED
+#define D2 4 // Define el pin donde está conectado el botón
 
 QueueHandle_t xBinarySemaphore;
 
