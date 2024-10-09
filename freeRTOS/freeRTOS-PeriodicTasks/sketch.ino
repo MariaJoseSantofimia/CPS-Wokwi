@@ -17,7 +17,6 @@ void vTaskPeriodic(void* pvParam)
   for(;;) {
     printf(msg); 
     vTaskDelayUntil( &xLastWakeTime, ( 250 / portTICK_RATE_MS ) );
-    vTaskDelete(NULL);
   }
 }
 
