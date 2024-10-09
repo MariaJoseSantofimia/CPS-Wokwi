@@ -11,18 +11,6 @@ const char *pcTextForTask1 = "Task 1 is running\r\n";
 const char *pcTextForTask2 = "Task 2 is running\t\n";
 const char *pcTextForTask3 = "Task 3 is running\r\n";
 
-void vTaskFunction(void *pvParameters)
-{
-  char *pcTaskName;
-  pcTaskName = (char *) pvParameters;
-  for(;;) {
-    printf(pcTaskName);
-    vTaskDelay(1000/portTICK_PERIOD_MS);
-  }
-  vTaskDelete(NULL);
-}
-
-
 void vTask1(void* pvParam)
 {
   const char *msg = "Task 1 is running\r\n";
