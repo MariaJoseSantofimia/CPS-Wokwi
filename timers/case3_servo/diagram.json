@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "author": "María J. Santofimia",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": -28.8, "left": -71.96, "attrs": {} },
+    { "type": "wokwi-servo", "id": "servo1", "top": 7.6, "left": 96, "attrs": {} }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "esp:GND.2", "servo1:GND", "black", [ "h48", "v48" ] ],
+    [ "servo1:V+", "esp:5V", "green", [ "h-19.2", "v144.1", "h-144.15" ] ],
+    [ "servo1:PWM", "esp:14", "green", [ "v153.8", "h-182.4", "v-124.8" ] ]
+  ],
+  "dependencies": {}
+}
