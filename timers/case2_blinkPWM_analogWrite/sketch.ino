@@ -1,4 +1,3 @@
-#include <Arduino.h>
 #include "analogWrite.h"
 
 #define D13 4
