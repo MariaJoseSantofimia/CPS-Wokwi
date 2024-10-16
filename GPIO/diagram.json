@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "author": "María J. Santofimia",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": -19.2, "left": 158.44, "attrs": {} },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn1",
+      "top": 63.8,
+      "left": 307.2,
+      "attrs": { "color": "green" }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn2",
+      "top": -22.6,
+      "left": 297.6,
+      "attrs": { "color": "red" }
+    },
+    { "type": "wokwi-led", "id": "led1", "top": 54, "left": -5.8, "attrs": { "color": "green" } },
+    { "type": "wokwi-led", "id": "led2", "top": -32.4, "left": 32.6, "attrs": { "color": "red" } },
+    {
+      "type": "wokwi-resistor",
+      "id": "r1",
+      "top": 99.95,
+      "left": 67.2,
+      "attrs": { "value": "1000" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r2",
+      "top": 52.8,
+      "left": 76.25,
+      "rotate": 180,
+      "attrs": { "value": "1000" }
+    }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "led2:A", "r2:2", "green", [ "v48", "h19.2" ] ],
+    [ "led2:C", "esp:GND.1", "black", [ "v0" ] ],
+    [ "led1:C", "esp:GND.1", "black", [ "v0" ] ],
+    [ "led1:A", "r1:1", "green", [ "v0" ] ],
+    [ "r2:1", "esp:25", "green", [ "v0" ] ],
+    [ "r1:2", "esp:12", "green", [ "v0" ] ],
+    [ "btn1:2.l", "esp:15", "green", [ "h-19.2", "v57.8" ] ],
+    [ "btn1:2.l", "esp:GND.2", "black", [ "h-28.8", "v-86.2" ] ],
+    [ "btn1:1.r", "esp:5V", "green", [ "h9.8", "v134.4", "h-220.95" ] ],
+    [ "btn2:2.l", "esp:GND.2", "black", [ "h0" ] ],
+    [ "btn2:1.r", "esp:5V", "green", [ "h29", "v230.4", "h-230.55" ] ],
+    [ "btn2:2.l", "esp:21", "green", [ "h-9.6", "v48.2" ] ]
+  ],
+  "dependencies": {}
+}
