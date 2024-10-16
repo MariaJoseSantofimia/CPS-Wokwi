@@ -1,10 +1,6 @@
 #define onSwitch 15
 #define offSwitch 21
 
-static volatile bool g_flash;
-
-
-
 void IRAM_ATTR on_handleInterrupt(){
   digitalWrite(25, 1);
   digitalWrite(12, 1);
