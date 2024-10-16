@@ -1,6 +1,3 @@
-#include "driver/periph_ctrl.h"
-#include "driver/timer.h"
-
 #define D13 4
 hw_timer_t * timer = NULL;
 
