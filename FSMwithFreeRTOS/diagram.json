@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "author": "María J. Santofimia",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": -28.8, "left": -4.76, "attrs": {} },
+    {
+      "type": "wokwi-led",
+      "id": "led1",
+      "top": -61.2,
+      "left": -255.4,
+      "attrs": { "color": "red" }
+    },
+    {
+      "type": "wokwi-photoresistor-sensor",
+      "id": "ldr1",
+      "top": 214.4,
+      "left": -229.6,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-pir-motion-sensor",
+      "id": "pir1",
+      "top": -178.4,
+      "left": -208.98,
+      "attrs": {}
+    }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "pir1:VCC", "esp:5V", "red", [ "v0" ] ],
+    [ "pir1:GND", "esp:GND.2", "black", [ "v19.2", "h249.34" ] ],
+    [ "led1:C", "esp:GND.2", "black", [ "h86.8", "v19.2" ] ],
+    [ "pir1:OUT", "esp:14", "green", [ "v0" ] ],
+    [ "ldr1:VCC", "esp:5V", "red", [ "h28.8", "v-57.6" ] ],
+    [ "ldr1:GND", "esp:GND.1", "black", [ "h38.4", "v-115.6" ] ],
+    [ "ldr1:DO", "esp:34", "green", [ "h19.2", "v-211.8" ] ],
+    [ "led1:A", "esp:13", "green", [ "v0" ] ]
+  ],
+  "dependencies": {}
+}
