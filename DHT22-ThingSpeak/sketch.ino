@@ -14,7 +14,7 @@ const char* server = "api.thingspeak.com"; // ThingSpeak server address
 const char* ssid = "Wokwi-GUEST";
 const char* password =  "";
 
-WiFiClientSecure wifiClient;  // Cliente seguro para SSL
+WiFiClient wifiClient;  // Cliente seguro para SSL
 
 void wifiConnect() {
   WiFi.begin(ssid, password);
@@ -40,12 +40,8 @@ Serial.begin(115200);
 
 void loop() {
   TempAndHumidity data = dhtSensor.getTempAndHumidity();
-  ThingSpeak.setField(1,data.temperature); // Set the value of field 1 in the ThingSpeak channel to the temperature
-  ThingSpeak.setField(2,data.humidity); // Set the value of field 2 in the ThingSpeak channel to the humidity
-
-    int x = ThingSpeak.writeFields(myChannelNumber,myApiKey); // Write the data to the ThingSpeak channel
-  
-    // Convertir valores de temperatura y humedad a cadenas de caracteres
+   
+  // Convertir valores de temperatura y humedad a cadenas de caracteres
   char tempString[8];
   char humString[8];
   dtostrf(data.temperature, 1, 2, tempString);
@@ -56,7 +52,12 @@ void loop() {
   Serial.println(tempString);
   Serial.print("Humidity: ");
   Serial.println(humString);
+
+  ThingSpeak.setField(1,data.temperature); // Set the value of field 1 in the ThingSpeak channel to the temperature
+  ThingSpeak.setField(2,data.humidity); // Set the value of field 2 in the ThingSpeak channel to the humidity
   
+  int x = ThingSpeak.writeFields(myChannelNumber,myApiKey); // Write the data to the ThingSpeak channel 
+
   if(x == 200){
     Serial.println("Data pushed successfully"); // Print a message if the data was successfully pushed to ThingSpeak
   }else{
@@ -64,5 +65,5 @@ void loop() {
   }
   Serial.println("---"); // Print a separator line
 
-  delay(2000); // Delay for 10 seconds
+  delay(10000); // Delay for 10 seconds
 }
