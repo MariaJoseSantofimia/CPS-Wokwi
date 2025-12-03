@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "author": "David Lobo Martínez",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-esp32-devkit-v1", "id": "esp", "top": -120.1, "left": 23.8, "attrs": {} },
+    { "type": "wokwi-dht22", "id": "dht1", "top": -24.9, "left": -115.13, "attrs": {} }
+  ],
+  "connections": [
+    [ "esp:TX0", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX0", "$serialMonitor:TX", "", [] ],
+    [ "dht1:GND", "esp:GND.2", "black", [ "v15.6", "h80.93", "v-76.7" ] ],
+    [ "esp:VIN", "dht1:VCC", "red", [ "h-28.8", "v76.8", "h-100.13" ] ],
+    [ "dht1:SDA", "esp:D15", "green", [ "v34.8", "h234.63", "v-105.4" ] ]
+  ],
+  "dependencies": {}
+}
