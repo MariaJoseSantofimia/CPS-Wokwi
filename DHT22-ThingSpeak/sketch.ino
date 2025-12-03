@@ -1,45 +1,61 @@
-/**
-   ESP32 + DHT22 Example for Wokwi
-   By DLM (commented in English)
-*/
 #include <WiFi.h>
-#include "DHTesp.h"
+#include <WiFiClientSecure.h>  // Librería para cliente seguro
 #include "ThingSpeak.h"
+#include "DHTesp.h"
 
-const int DHT_PIN = 15; // Pin number to which the DHT22 sensor is connected
-const char* WIFI_NAME = "Wokwi-GUEST"; // Name of the WiFi network
-const char* WIFI_PASSWORD = ""; // Password of the WiFi network
+#define DHT_PIN 15
+
+DHTesp dhtSensor;
+
 const int myChannelNumber = 3191059; // ThingSpeak channel number
 const char* myApiKey = "CGDAT0C37L6JWVWW"; // ThingSpeak API key
 const char* server = "api.thingspeak.com"; // ThingSpeak server address
 
-DHTesp dhtSensor; // Create an instance of the DHTesp library
-WiFiClient client; // Create a WiFi client object
+const char* ssid = "Wokwi-GUEST";
+const char* password =  "";
+
+WiFiClientSecure wifiClient;  // Cliente seguro para SSL
+
+void wifiConnect() {
+  WiFi.begin(ssid, password);
+  
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial.println("Connecting to WiFi...");
+  }
+
+  Serial.println("Connected to WiFi");
+  Serial.print("IP Address: ");
+  Serial.println(WiFi.localIP());
+}
+
 
 void setup() {
-  Serial.begin(115200); // Initialize the serial communication at a baud rate of 115200
-  dhtSensor.setup(DHT_PIN, DHTesp::DHT22); // Initialize the DHT22 sensor
-  WiFi.begin(WIFI_NAME, WIFI_PASSWORD); // Connect to the WiFi network
-  while (WiFi.status() != WL_CONNECTED){
-    delay(1000);
-    Serial.println("Wifi not connected"); // Print a message if WiFi is not connected
-  }
-  Serial.println("Wifi connected !"); // Print a message if WiFi is connected
-  Serial.println("Local IP: " + String(WiFi.localIP())); // Print the local IP address
-  WiFi.mode(WIFI_STA); // Set the WiFi mode to station mode
-  ThingSpeak.begin(client); // Initialize the ThingSpeak library
+Serial.begin(115200);
+  delay(4000);
+  dhtSensor.setup(DHT_PIN, DHTesp::DHT22);
+  wifiConnect();
+  ThingSpeak.begin(wifiClient); // Initialize the ThingSpeak library
 }
 
 void loop() {
-  TempAndHumidity  data = dhtSensor.getTempAndHumidity(); // Read temperature and humidity from the DHT22 sensor
+  TempAndHumidity data = dhtSensor.getTempAndHumidity();
   ThingSpeak.setField(1,data.temperature); // Set the value of field 1 in the ThingSpeak channel to the temperature
   ThingSpeak.setField(2,data.humidity); // Set the value of field 2 in the ThingSpeak channel to the humidity
 
+    int x = ThingSpeak.writeFields(myChannelNumber,myApiKey); // Write the data to the ThingSpeak channel
   
-  int x = ThingSpeak.writeFields(myChannelNumber,myApiKey); // Write the data to the ThingSpeak channel
-  
-  Serial.println("Temp: " + String(data.temperature, 2) + "°C"); // Print the temperature value with 2 decimal places
-  Serial.println("Humidity: " + String(data.humidity, 1) + "%"); // Print the humidity value with 1 decimal place
+    // Convertir valores de temperatura y humedad a cadenas de caracteres
+  char tempString[8];
+  char humString[8];
+  dtostrf(data.temperature, 1, 2, tempString);
+  dtostrf(data.humidity, 1, 2, humString);
+
+  // Mostrar en el Serial Monitor
+  Serial.print("Temperature: ");
+  Serial.println(tempString);
+  Serial.print("Humidity: ");
+  Serial.println(humString);
   
   if(x == 200){
     Serial.println("Data pushed successfully"); // Print a message if the data was successfully pushed to ThingSpeak
@@ -48,5 +64,5 @@ void loop() {
   }
   Serial.println("---"); // Print a separator line
 
-  delay(10000); // Delay for 10 seconds
+  delay(2000); // Delay for 10 seconds
 }
